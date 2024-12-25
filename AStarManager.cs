@@ -22,4 +22,10 @@ public class AStarManager
     {
         return AStar.PathfindAStar(aGraph, start, end, aHeuristic);
     }
+    // Remove all connections associated with a given node.
+public void RemoveConnectionsFromNode(GameObject node)
+{
+    aGraph.RemoveConnectionsFromNode(node);
+}
+
 }

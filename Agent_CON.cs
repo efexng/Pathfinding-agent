@@ -21,7 +21,7 @@ public class Agent_CON : MonoBehaviour
     [SerializeField]
     private float OrientationOffset = 0;
     [SerializeField]
-    private float avoidDistance = 14;
+    private readonly float avoidDistance = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,22 +46,21 @@ public class Agent_CON : MonoBehaviour
         // Set the target props.
         TargetProps.Position = TargetGO.transform.position;
     }
-
     // Update is called once per frame
     void Update()
     {
         // Update the AI character.
         // ------------------------
-      // Steering - Movement algorithms.
-//movAlg.SteeringSeek_1(myProps, TargetProps, ref SOutput);
-movAlg.SteeringObstacleAvoidance(myProps, TargetProps,
- ref SOutput, 3, 8, 6, 0.5f, 0, transform.gameObject);
-// We will align to the direction we are moving.
-//TargetProps.Orientation = movAlg.GetOrientation(myProps.Velocity);
-//movAlg.SteeringAlign_1(myProps, TargetProps, ref SOutput);
-// Update the characters
-//movAlg.UpdateSteering(ref myProps, SOutput, 5.0f, Time.deltaTime);
-
+        // Steering - Movement algorithms.
+        movAlg.SteeringSeek_1(myProps, TargetProps, ref SOutput);
+        movAlg.SteeringObstacleAvoidance(myProps, TargetProps,
+         ref SOutput, 3, 8, 6, 0.5f, 0, transform.gameObject);
+        // We will align to the direction we are moving.
+        TargetProps.Orientation = movAlg.GetOrientation(myProps.Velocity);
+        movAlg.SteeringAlign_1(myProps, TargetProps, ref SOutput);
+        // Update the characters
+        movAlg.UpdateSteering(ref myProps, SOutput, 5.0f, Time.deltaTime);
+        // Cancel position change if no steering is true.
         if (SOutput.NoSteering)
         {
             // Keep the current position when no steering.
@@ -72,9 +71,9 @@ movAlg.SteeringObstacleAvoidance(myProps, TargetProps,
             SOutput.NoSteering = false;
         }
         // Kinematic - Movement algorithms.
-         movAlg.KinematicWander(myProps, ref KOutput);
+        // movAlg.KinematicWander(myProps, ref KOutput);
         // Update the characters
-         movAlg.UpdateKinematic(ref myProps, KOutput, Time.deltaTime);
+        // movAlg.UpdateKinematic(ref myProps, KOutput, Time.deltaTime);
         //:~END: AI Update.
         // Update the animation.
         if (anim)
@@ -96,7 +95,6 @@ movAlg.SteeringObstacleAvoidance(myProps, TargetProps,
         Vector3(0, -((Mathf.Rad2Deg * myProps.Orientation) - OrientationOffset), 0);
         transform.rotation = Orientation;
     }
-
     private void FixedUpdate()
     {
         // If we would like our algorithms to work with phyics we can use move position.
@@ -104,6 +102,7 @@ movAlg.SteeringObstacleAvoidance(myProps, TargetProps,
         //{
         // rb.MovePosition(rb.position + myProps.Velocity * Time.deltaTime);
         //}
+
         // We also need to make sure "myProps" keeps an accurate record of position because we
         // are using Unity to update position and not setting it ourselves.
         // The Unity update will be different.

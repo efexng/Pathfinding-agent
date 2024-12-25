@@ -1,30 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class Graph
 {
- // A list of graph connections.
- private List<Connection> WaypointConnections = new List<Connection>();
- public Graph()
- {
+    // A list of graph connections.
+    private List<Connection> WaypointConnections = new List<Connection>();
 
- }
- // Add connection.
- public void AddConnection(Connection aConnection)
- {
- WaypointConnections.Add(aConnection);
- }
- // Get the connections from a node to the nodes it is connected to.
- public List<Connection> GetConnections(GameObject FromNode)
- {
- List<Connection> TmpConnections = new List<Connection>();
- foreach (Connection aConnection in WaypointConnections)
- {
- if(aConnection.FromNode.Equals(FromNode))
- {
- TmpConnections.Add(aConnection);
- }
- }
- return TmpConnections;
- }
+    public Graph()
+    {
+    }
+
+    // Add connection.
+    public void AddConnection(Connection aConnection)
+    {
+        WaypointConnections.Add(aConnection);
+    }
+
+    // Get the connections from a node to the nodes it is connected to.
+    public List<Connection> GetConnections(GameObject FromNode)
+    {
+        List<Connection> TmpConnections = new List<Connection>();
+        foreach (Connection aConnection in WaypointConnections)
+        {
+            if (aConnection.FromNode.Equals(FromNode))
+            {
+                TmpConnections.Add(aConnection);
+            }
+        }
+        return TmpConnections;
+    }
+
+    // Remove all connections associated with a specific node.
+    public void RemoveConnectionsFromNode(GameObject node)
+    {
+        WaypointConnections.RemoveAll(connection =>
+            connection.FromNode == node || connection.ToNode == node);
+    }
 }

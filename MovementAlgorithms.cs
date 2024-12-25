@@ -42,13 +42,13 @@ public class MovementAlgorithms
         // Find the magnitude / length of the velocity vector.
         return tmpVel.magnitude;
     }
-
     // ########################
     // Steering Algorithms.
     // ########################
     // Update the position and orientation of an entity.
+    // Update the position and orientation of an entity.
     public void UpdateSteering(ref AgentProps aAProps,
- SteeringOutput aSteeringOpt, float maxSpeed, float deltaTime)
+     SteeringOutput aSteeringOpt, float maxSpeed, float deltaTime)
     {
         // Update the velocity and rotation.
         aAProps.Velocity += aSteeringOpt.AccelerationLinear * deltaTime;
@@ -65,7 +65,7 @@ public class MovementAlgorithms
     }
     // Steering Seek Algorithm.
     public void SteeringSeek_1(AgentProps aAProps,
- AgentProps aTargetAProps, ref SteeringOutput SOutput)
+     AgentProps aTargetAProps, ref SteeringOutput SOutput)
     {
         // max Acceleration
         float maxAcceleration = 1.0f;
@@ -119,9 +119,8 @@ public class MovementAlgorithms
         SOutput.NoSteering = false;
     }
     // Align Algorithm.
-    // Align Algorithm.
     public void SteeringAlign_1(AgentProps aAProps,
-    AgentProps aTargetAProps, ref SteeringOutput SOutput)
+     AgentProps aTargetAProps, ref SteeringOutput SOutput)
     {
         // max Acceleration
         float maxAngularAcceleration = 2.0f;
@@ -170,14 +169,12 @@ public class MovementAlgorithms
             SOutput.AccelerationAngular = SOutput.AccelerationAngular * maxAngularAcceleration;
         }
     }
-
-    // Steering Obstacle Avoidance.
     // Steering Obstacle Avoidance.
     public void SteeringObstacleAvoidance(AgentProps aAProps,
-    AgentProps aTargetAProps, ref SteeringOutput SOutput,
-    float avoidDistance, float lookAhead, float lookAheadWhiskers,
-    float lookAheadHeightOffset, float lookAheadForwardOffset,
-    GameObject go)
+     AgentProps aTargetAProps, ref SteeringOutput SOutput,
+     float avoidDistance, float lookAhead, float lookAheadWhiskers,
+     float lookAheadHeightOffset, float lookAheadForwardOffset,
+     GameObject go)
     {
         // Calculate enitity position.
         Vector3 EntityPosition = aAProps.Position;
@@ -212,7 +209,6 @@ public class MovementAlgorithms
             Debug.DrawRay(EntityPosition, newLeftVector * hitForwardLeft.distance, Color.red);
         else
             Debug.DrawRay(EntityPosition, newLeftVector * lookAheadWhiskers, Color.yellow);
-
         // Check if hit forward target.
         Vector3 ForwardAvoidanceTarget = new Vector3(0, 0, 0);
         if (bHitForward)
@@ -240,7 +236,6 @@ public class MovementAlgorithms
             newTarget.y = aTargetAProps.Position.y;
             LeftAvoidanceTarget = newTarget;
         }
-
         // Obstacle Avoidance Algorithm.
         if (bHitForward || bHitForwardRight ||
         bHitForwardLeft || ObstacleAvoidanceTargetSet == true)
@@ -280,14 +275,12 @@ public class MovementAlgorithms
             SteeringSeek_1(aAProps, aTargetAProps, ref SOutput);
         }
     }
-
     // ########################
     // Kinematic Algorithms.
     // ########################
     // Update the position and orientation of an entity.
-    // Update the position and orientation of an entity.
     public void UpdateKinematic(ref AgentProps aAProps,
-    KinematicOutput KOutput, float deltaTime)
+     KinematicOutput KOutput, float deltaTime)
     {
         // Update the velocity and rotation.
         aAProps.Velocity = KOutput.Velocity;
@@ -296,8 +289,6 @@ public class MovementAlgorithms
         aAProps.Position += (aAProps.Velocity * deltaTime);
         aAProps.Orientation += aAProps.Rotation * deltaTime;
     }
-
-    // Kinematic Wander.
     // Kinematic Wander.
     public void KinematicWander(AgentProps aAProps, ref KinematicOutput KOutput)
     {
@@ -316,5 +307,4 @@ public class MovementAlgorithms
         float rand2 = Random.Range(0.0f, 1.0f);
         KOutput.Rotation = (rand1 - rand2) * maxRotation;
     }
-
 }

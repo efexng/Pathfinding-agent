@@ -15,21 +15,21 @@ public class VanCon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gos = GameObject.FindGameObjectsWithTag("Pineapple");
-        // Find closest pineapple.
+        gos = GameObject.FindGameObjectsWithTag("Coin");
+        // Find closest Coin.
         closest = FindClosest();
-        Debug.Log("Closest pineapple: " + closest.name);
-        // Display direction to pineapple.
+        Debug.Log("Closest Coin: " + closest.name);
+        // Display direction to Coin.
         Vector3 direction = closest.transform.position - transform.position;
         // Determine the distance of the vector.
         float distance = direction.magnitude;
-        Debug.Log("Closest pineapple distance: " + distance);
+        Debug.Log("Closest Coin distance: " + distance);
     }
     // Update is called once per frame
     // Update is called once per frame
     void Update()
     {
-        // Find a pineapple if one does not exist.
+        // Find a Coin if one does not exist.
         if (closest == null)
         {
             closest = FindClosest();
@@ -40,7 +40,7 @@ public class VanCon : MonoBehaviour
                 return;
             }
         }
-        // Determine the direction to the closest pineapple.
+        // Determine the direction to the closest Coin.
         Vector3 direction = closest.transform.position - transform.position;
         // Calculates the length of the relative position vector
         float distance = direction.magnitude;
